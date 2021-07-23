@@ -1,0 +1,24 @@
+extend type Author @key(fields: "authorId") {
+  authorId: ID! @external
+  books: [Book]
+}
+
+type Book @key(fields: "bookId") {
+  bookId: ID!
+  title: String
+  author: Author
+}
+
+input CreateBookInput {
+  title: String
+  authorId: Int
+}
+
+extend type Mutation {
+  createBook(input: CreateBookInput!): Book!
+}
+
+extend type Query {
+  books: [Book]
+  booksByAuthor(authorId: Int): [Book]
+}
